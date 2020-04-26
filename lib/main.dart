@@ -13,23 +13,46 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   var _questionIndex = 0;
+  var _totalScore = 0;
   final List<Map> _questions = const [
     {
       "Question": "Favorite song ?",
-      "Answers": ['Let it be', 'Lasciate mi cantare', 'La Boheme']
+      "Answers": [
+        {"text": 'Let it be', "score": 1},
+        {"text": 'Lasciate mi cantare', "score": 2},
+        {"text": 'La Boheme', "score": 3}
+      ]
     },
     {
       "Question": "Favorite OS ?",
-      "Answers": ["Linux", "iOS", "Windows"]
+      "Answers": [
+        {"text": 'Linux', "score": 1},
+        {"text": 'iOS', "score": 2},
+        {"text": 'Windows', "score": 3}
+      ]
     },
     {
       "Question": "Favorite Tech ?",
-      "Answers": ["Python", "C++", "Golang"]
+      "Answers": [
+        {"text": 'Python', "score": 1},
+        {"text": 'C++', "score": 2},
+        {"text": 'Golang', "score": 3}
+      ]
     }
   ];
 
-  void _answerQuestion(int inputIndex) {
-    setState(() => _questionIndex = inputIndex);
+  void _answerQuestion(int inputIndex, int score) {
+    setState(() {
+      _questionIndex = inputIndex;
+      _totalScore += score;
+    });
+  }
+
+  void _resetQuiz() {
+    setState(() {
+      _questionIndex = 0;
+      _totalScore = 0;
+    });
   }
 
   @override
@@ -45,7 +68,7 @@ class _MyAppState extends State<MyApp> {
                 questionIndex: _questionIndex,
                 cb: _answerQuestion,
               )
-            : Results("Its Done"),
+            : Results(_totalScore, _resetQuiz),
       ),
     );
   }
