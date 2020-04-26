@@ -1,17 +1,24 @@
 import 'package:flutter/material.dart';
+import './question.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
-  void answerQuestion(int index) {
-    questionIndex = index;
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return _MyAppState();
+  }
+}
+
+class _MyAppState extends State<MyApp> {
+  var _questionIndex = 0;
+  var questions = ["Question 1", "Question 2", "Question 3"];
+  void _answerQuestion(int inputIndex) {
+    setState(() => _questionIndex = inputIndex);
   }
 
-  var questionIndex = 0;
-  var questions = ["Question 1", "Question 2", "Question 3"];
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
@@ -19,18 +26,18 @@ class MyApp extends StatelessWidget {
         ),
         body: Column(
           children: [
-            Text(questions[questionIndex]),
+            Question(questions[_questionIndex]),
             RaisedButton(
               child: Text('Answer 1'),
-              onPressed: () => answerQuestion(0),
+              onPressed: () => _answerQuestion(0),
             ),
             RaisedButton(
               child: Text('Answer 2'),
-              onPressed: () => answerQuestion(1),
+              onPressed: () => _answerQuestion(1),
             ),
             RaisedButton(
               child: Text('Answer 3'),
-              onPressed: () => answerQuestion(2),
+              onPressed: () => _answerQuestion(2),
             )
           ],
         ),
